@@ -29,13 +29,14 @@ const hero = document.getElementsByClassName('main__hero')[0]
 */
 
 function activeSection(params) {
-    for(let section of sections){
+    sections.forEach( section => {
         const rect = section.getBoundingClientRect()
+        // the top of the section in the portview start from -5.8125 because of the fixed navbar
         if(rect.top >= -5.8125 && rect.bottom <=window.innerHeight){
             return section;
         }
         
-    }
+    })
 }
 
 const button = "<button class='top-button hidden'> <img src='img/arrow.jpg' /> </button>"
@@ -48,19 +49,12 @@ showBut.addEventListener('click', function(){
 })
 
 function showTop(disp){
-    if(disp == true){
-        showBut.classList.remove('hidden')
-    }else{
-        showBut.classList.add('hidden')
-    }
+    disp ? showBut.classList.remove('hidden') : showBut.classList.add('hidden')
+
 }
 
 function showNav(disp) {
-    if(disp == true){
-        pageHeader.classList.add('show')
-    }else{
-        pageHeader.classList.remove('show')
-    }
+    disp ? pageHeader.classList.add('show') : pageHeader.classList.remove('show')
 }
 
 /**
@@ -76,13 +70,13 @@ function createNav() {
     logo.textContent = "Landing Page"
     logo.className = "logo"
     fragement.appendChild(logo);
-    for (let section of sections ){
+    sections.forEach( section => {
         const nav = document.createElement('li');
         nav.className = "menu__link";
         nav.dataset.nav = section.id ;
         nav.textContent = section.dataset.nav;
         fragement.appendChild(nav);
-    }
+    })
     navBar.appendChild(fragement);
     const links = document.getElementsByClassName('menu__link')
     links[0].classList.add('active')
@@ -96,13 +90,9 @@ function setActive() {
         prev.classList.remove('your-active-class');
         active.classList.add('your-active-class');
         const links = document.getElementsByClassName('menu__link')
-        for(let link of links){
-            if(link.dataset.nav === active.id){
-                link.classList.add('active')
-            }else{
-                link.classList.remove('active')
-            }
-        }
+        links.forEach( link => {
+            link.dataset.nav === active.id ? link.classList.add('active') : link.classList.remove('active')
+        })
     }    
 }
 
@@ -153,10 +143,6 @@ for ( let coll of colls) {
     coll.addEventListener("click", function() {
         this.classList.toggle("activebtn");
         var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
+        content.style.display === "block" ? content.style.display = "none" : content.style.display = "block"
     });
 }
